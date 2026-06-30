@@ -1,0 +1,4 @@
+build/
+*.logarchive
+*.xcuserdata/
+*.xcuserdatad/
