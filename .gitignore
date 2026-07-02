@@ -2,3 +2,5 @@ build/
 *.logarchive
 *.xcuserdata/
 *.xcuserdatad/
+buildServer.json
+.compile

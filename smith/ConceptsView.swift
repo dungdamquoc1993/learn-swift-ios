@@ -224,6 +224,37 @@ struct ConceptDetailView: View {
                         }
                     }
 
+                    if concept.id == .asyncConcept {
+                        NavigationLink {
+                            LifecycleExamplesView()
+                        } label: {
+                            StudyCard {
+                                HStack(spacing: 14) {
+                                    Image(systemName: "clock.arrow.circlepath")
+                                        .font(.title2)
+                                        .foregroundStyle(.cyan)
+                                        .frame(width: 34, height: 34)
+
+                                    VStack(alignment: .leading, spacing: 4) {
+                                        Text("Open lifecycle examples")
+                                            .font(.headline)
+                                        Text("Compare onAppear, onDisappear, onChange, .task, .task(id:), and scenePhase.")
+                                            .font(.subheadline)
+                                            .foregroundStyle(.secondary)
+                                            .fixedSize(horizontal: false, vertical: true)
+                                    }
+
+                                    Spacer()
+
+                                    Image(systemName: "chevron.right")
+                                        .font(.caption.weight(.semibold))
+                                        .foregroundStyle(.tertiary)
+                                }
+                            }
+                        }
+                        .buttonStyle(.plain)
+                    }
+
                     StudyCard {
                         VStack(alignment: .leading, spacing: 10) {
                             Label("Your notes", systemImage: "note.text")

@@ -11,6 +11,7 @@ struct DashboardView: View {
                     dashboardHeader
                     metricGrid
                     dailyPrompt
+                    lifecycleLab
                     nextLesson
                     GesturePracticeCard()
                     taskPreview
@@ -126,6 +127,38 @@ struct DashboardView: View {
                 }
             }
         }
+    }
+
+    private var lifecycleLab: some View {
+        NavigationLink {
+            LifecycleExamplesView()
+        } label: {
+            StudyCard {
+                HStack(spacing: 14) {
+                    Image(systemName: "clock.arrow.circlepath")
+                        .font(.title2)
+                        .foregroundStyle(.cyan)
+                        .frame(width: 34, height: 34)
+
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text("Lifecycle hooks")
+                            .font(.headline)
+                        Text("See onAppear, onDisappear, onChange, .task, .task(id:), and scenePhase in one place.")
+                            .font(.subheadline)
+                            .foregroundStyle(.secondary)
+                            .fixedSize(horizontal: false, vertical: true)
+                    }
+
+                    Spacer()
+
+                    Image(systemName: "chevron.right")
+                        .font(.caption.weight(.semibold))
+                        .foregroundStyle(.tertiary)
+                }
+            }
+        }
+        .buttonStyle(.plain)
+        .accessibilityHint("Opens lifecycle hook examples.")
     }
 
     private var nextLesson: some View {
