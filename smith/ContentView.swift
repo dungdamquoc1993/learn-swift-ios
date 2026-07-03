@@ -33,6 +33,12 @@ struct ContentView: View {
                 }
                 .tag(StudyTab.concepts.rawValue)
 
+            APILabView()
+                .tabItem {
+                    Label(StudyTab.apiLab.title, systemImage: StudyTab.apiLab.systemImage)
+                }
+                .tag(StudyTab.apiLab.rawValue)
+
             PracticeView()
                 .tabItem {
                     Label(StudyTab.practice.title, systemImage: StudyTab.practice.systemImage)

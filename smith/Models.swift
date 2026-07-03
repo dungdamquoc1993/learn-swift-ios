@@ -3,6 +3,7 @@ import SwiftUI
 enum StudyTab: String, CaseIterable, Identifiable {
     case dashboard
     case concepts
+    case apiLab
     case practice
     case settings
 
@@ -12,6 +13,7 @@ enum StudyTab: String, CaseIterable, Identifiable {
         switch self {
         case .dashboard: "Dashboard"
         case .concepts: "Concepts"
+        case .apiLab: "API Lab"
         case .practice: "Practice"
         case .settings: "Settings"
         }
@@ -21,6 +23,7 @@ enum StudyTab: String, CaseIterable, Identifiable {
         switch self {
         case .dashboard: "gauge.with.dots.needle.50percent"
         case .concepts: "list.bullet.rectangle"
+        case .apiLab: "network"
         case .practice: "checklist"
         case .settings: "gearshape"
         }
