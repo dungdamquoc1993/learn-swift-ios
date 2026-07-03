@@ -151,8 +151,85 @@ Cho robot/LLM assistant, các capability dễ cần tới:
 - `AVFoundation`: microphone, audio playback, camera capture.
 - Speech/Text-to-Speech: nhập/xuất bằng giọng nói.
 - `Vision`: xử lý ảnh/camera frame.
-- `CoreMotion`: accelerometer, gyroscope.
+- `CoreMotion`: accelerometer, gyroscope, magnetometer, device motion, altimeter, pedometer, motion activity.
 - Location nếu robot cần context vị trí.
+
+#### Core Motion Lab (đã implement trong app)
+
+App hiện tập trung vào [Core Motion](https://developer.apple.com/documentation/CoreMotion) trước:
+
+| Lab | API | Ghi chú |
+|-----|-----|---------|
+| Device Motion | `CMDeviceMotion`, `CMAttitude` | Spirit level, processed gravity/user acceleration |
+| Accelerometer | `CMAccelerometerData` | Raw values, includes gravity |
+| Gyroscope | `CMGyroData` | Rotation rate |
+| Magnetometer | `CMMagnetometerData` | Magnetic field µT |
+| Altimeter | `CMAltimeter` | Barometric relative altitude |
+| Pedometer | `CMPedometer` | Steps, distance — cần `NSMotionUsageDescription` |
+| Motion Activity | `CMMotionActivityManager` | walking/running/stationary — cùng motion permission |
+| Unsupported APIs | reference only | Headphone motion, Watch Ultra submersion, fall detection, movement disorder, `CMSensorRecorder` |
+
+Pattern chung: `MotionManagerService` start/stop trong `.onAppear` / `.onDisappear`, UI đọc `@Observable` model.
+
+Code nằm trong `smith/CoreMotion/` (tạm comment khỏi `ContentView` khi học tiếp).
+
+#### Core ML Lab — Vision + Sound + Speech (đã implement)
+
+App hiện học [Core ML](https://developer.apple.com/documentation/CoreML) qua 3 lab dùng **built-in model của Apple**, không bundle `.mlmodel` tùy chỉnh:
+
+| Lab | Framework | API | Input |
+|-----|-----------|-----|-------|
+| Vision | Vision | `VNClassifyImageRequest` | PhotosPicker |
+| Sound | SoundAnalysis | `SNClassifySoundRequest` | Microphone |
+| Speech | Speech | `SFSpeechRecognizer` | Microphone |
+
+Permission cần thêm:
+
+- `NSMicrophoneUsageDescription` — Sound + Speech
+- `NSSpeechRecognitionUsageDescription` — Speech
+
+Chưa cover ở giai đoạn này: NLP/tabular/custom model/LLM chat.
+
+Code nằm trong `smith/CoreML/`, entry point `CoreMLHubView`.
+
+#### AVFoundation Lab — Hardware Demos (đã implement)
+
+App học [AVFoundation](https://developer.apple.com/documentation/AVFoundation) qua mic, loa, và camera:
+
+| Lab | API | Hardware |
+|-----|-----|----------|
+| Audio Session | `AVAudioSession` | Speaker route, mic sharing |
+| Audio Playback | `AVAudioPlayer` | Speaker / headphones |
+| Audio Recording | `AVAudioRecorder` | Microphone |
+| Camera Preview | `AVCaptureSession` | Camera |
+| Photo Capture | `AVCapturePhotoOutput` | Camera shutter |
+| Video Recording | `AVCaptureMovieFileOutput` + `AVPlayer` | Camera + mic |
+| Reference | read-only | AirPlay, depth, editing, DRM |
+
+Permission:
+
+- `NSCameraUsageDescription` — camera labs
+- `NSMicrophoneUsageDescription` — recording + video (đã có từ Core ML)
+
+CoreML Sound/Speech đã dùng `AVAudioEngine`; AVFoundation labs cover record/play/capture file đầy đủ hơn.
+
+Code nằm trong `smith/AVFoundation/`, entry point `AVFoundationHubView`.
+
+#### Core Bluetooth Lab (đã implement)
+
+App học [Core Bluetooth](https://developer.apple.com/documentation/CoreBluetooth) qua central + peripheral simulator:
+
+| Lab | API | Vai trò |
+|-----|-----|---------|
+| Central | `CBCentralManager`, `CBPeripheralDelegate` | Scan, connect, discover GATT, read/write/notify |
+| Peripheral Simulator | `CBPeripheralManager` | Advertise custom StudySmith service |
+| Reference | read-only | Roles, GATT, testing with Mac mini |
+
+Permission: `NSBluetoothAlwaysUsageDescription`.
+
+Test flow: chạy Peripheral trên iPhone, Central trên iPhone thứ hai hoặc nRF Connect trên Mac mini.
+
+Code nằm trong `smith/CoreBluetooth/`, entry point `CoreBluetoothHubView`.
 
 ### Lifecycle Và Background
 
@@ -291,12 +368,16 @@ Phase 3: Robot + local LLM
 
 ## Thứ Tự Học Đề Xuất Trong Project Này
 
-1. Thêm màn hình `API Lab`: gọi API public, decode JSON, show loading/error.
-2. Thêm màn hình `Storage Lab`: download file giả, lưu vào Application Support, xóa file.
-3. Thêm màn hình `Permissions Lab`: notification/microphone/local network.
-4. Thêm màn hình `Robot Lab`: mock robot client qua HTTP/WebSocket.
-5. Thêm màn hình `Model Lab`: model state machine, download/install/delete.
-6. Cuối cùng mới ghép `Chat + Robot Control`.
+1. **Core Motion Lab** (trong `CoreMotion/`): device motion, accel, gyro, magnetometer, altimeter, pedometer, motion activity.
+2. **Core ML Lab** (trong `CoreML/`): Vision image classification, ambient sound classification, speech-to-text.
+3. **AVFoundation Lab** (trong `AVFoundation/`): audio session, playback, recording, camera preview, photo, video.
+4. **Core Bluetooth Lab** (đang active trong `CoreBluetooth/`): BLE central scanner + peripheral simulator.
+5. Thêm màn hình `Storage Lab`: download file giả, lưu vào Application Support, xóa file.
+6. Thêm màn hình `API Lab`: gọi API public, decode JSON, show loading/error.
+7. Thêm màn hình `Permissions Lab`: notification/microphone/local network.
+8. Thêm màn hình `Robot Lab`: mock robot client qua HTTP/WebSocket.
+9. Thêm màn hình `Model Lab`: model state machine, download/install/delete.
+10. Cuối cùng mới ghép `Chat + Robot Control`.
 
 ## Nguyên Tắc Giữ Cho Project Không Bị Cồng Kềnh
 

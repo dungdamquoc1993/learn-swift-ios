@@ -254,6 +254,11 @@
 				DEVELOPMENT_TEAM = 8H226HF52J;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "StudySmith uses Bluetooth to scan, connect, and demo Core Bluetooth labs.";
+				INFOPLIST_KEY_NSCameraUsageDescription = "StudySmith uses the camera for AVFoundation capture demos.";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "StudySmith listens to ambient sound and speech for Core ML demos.";
+				INFOPLIST_KEY_NSMotionUsageDescription = "StudySmith reads step count and motion activity for Core Motion demos.";
+				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "StudySmith transcribes speech for the Speech lab demo.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -286,6 +291,11 @@
 				DEVELOPMENT_TEAM = 8H226HF52J;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "StudySmith uses Bluetooth to scan, connect, and demo Core Bluetooth labs.";
+				INFOPLIST_KEY_NSCameraUsageDescription = "StudySmith uses the camera for AVFoundation capture demos.";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "StudySmith listens to ambient sound and speech for Core ML demos.";
+				INFOPLIST_KEY_NSMotionUsageDescription = "StudySmith reads step count and motion activity for Core Motion demos.";
+				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "StudySmith transcribes speech for the Speech lab demo.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
